@@ -1,6 +1,6 @@
 package main
 
-import "github.com/kristakoch/splchkr/cmd"
+import "github.com/kristakoch/spellchecker/cmd"
 
 func main() {
 	cmd.Execute()

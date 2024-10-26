@@ -9,18 +9,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// cmntsCmd represents the cmnts command
-var cmntsCmd = &cobra.Command{
-	Use:   "cmnts",
-	Short: "Returns all single-line go comments in target files",
+// stringsCmd represents the strings command
+var stringsCmd = &cobra.Command{
+	Use:   "strings",
+	Short: "Returns all lines containing string punctuation",
 	Long:  `Arguments are each a path to a single file.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var err error
 
-		fmt.Printf("attempting to get comments for %d file(s)\n", len(args))
+		fmt.Printf("attempting to get lines with strings for %d file(s)\n", len(args))
 
 		for _, fn := range args {
-			fmt.Printf("getting comments for file %s\n", fn)
+			fmt.Printf("getting lines with strings for file %s\n", fn)
 
 			var fb []byte
 			if fb, err = ioutil.ReadFile(fn); nil != err {
@@ -31,23 +31,23 @@ var cmntsCmd = &cobra.Command{
 			goCodeLines := strings.Split(string(fb), "\n")
 
 			green := color.New(color.FgGreen).SprintFunc()
-			var comments []string
+			var strLines []string
 			for i, ln := range goCodeLines {
 				ln = strings.TrimSpace(ln)
-				if strings.HasPrefix(ln, "//") {
+				if strings.Contains(ln, "\"") || strings.Contains(ln, "`") {
 					c := fmt.Sprintf("%s:%d	%s", fn, i+1, green(ln))
-					comments = append(comments, c)
+					strLines = append(strLines, c)
 				}
 			}
 
-			if len(comments) == 0 {
-				fmt.Printf("no comments found in %d lines of code, continuing on\n", len(goCodeLines))
+			if len(strLines) == 0 {
+				fmt.Printf("no lines with strings found in %d lines of code, continuing on\n", len(goCodeLines))
 				continue
 			}
 
-			fmt.Printf("found %d comment lines in %d lines of code, will log out comments for spell checking\n\n", len(comments), len(goCodeLines))
+			fmt.Printf("found %d string lines in %d lines of code, will log out lines with strings for spell checking\n\n", len(strLines), len(goCodeLines))
 
-			for _, c := range comments {
+			for _, c := range strLines {
 				fmt.Println(c)
 			}
 			fmt.Println()
@@ -57,5 +57,5 @@ var cmntsCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(cmntsCmd)
+	rootCmd.AddCommand(stringsCmd)
 }

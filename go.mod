@@ -1,4 +1,4 @@
-module github.com/kristakoch/splchkr
+module github.com/kristakoch/spellchecker
 
 go 1.13
 

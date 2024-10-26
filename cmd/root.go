@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
 	"github.com/spf13/viper"
@@ -13,7 +14,7 @@ var cfgFile string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "splchkr",
+	Use:   "spellchecker",
 	Short: "Tool to log out comments for spell checking",
 	Long:  ``,
 	// Uncomment the following line if your bare application
@@ -37,7 +38,7 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.splchkr.yaml)")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.spellchecker.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
@@ -57,9 +58,9 @@ func initConfig() {
 			os.Exit(1)
 		}
 
-		// Search config in home directory with name ".splchkr" (without extension).
+		// Search config in home directory with name ".spellchecker" (without extension).
 		viper.AddConfigPath(home)
-		viper.SetConfigName(".splchkr")
+		viper.SetConfigName(".spellchecker")
 	}
 
 	viper.AutomaticEnv() // read in environment variables that match

@@ -10,8 +10,8 @@ import (
 )
 
 // lgCmd represents the lg command
-var lgsCmd = &cobra.Command{
-	Use:   "lgs",
+var logsCmd = &cobra.Command{
+	Use:   "logs",
 	Short: "Logs all lines containing Infof, Errorf, and Warningf",
 	Long:  `Arguments are each a path to a single file.`,
 	Run: func(cmd *cobra.Command, args []string) {
@@ -57,5 +57,5 @@ var lgsCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(lgsCmd)
+	rootCmd.AddCommand(logsCmd)
 }
